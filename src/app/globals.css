@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: #ffffff;
+  --color-base-200: #f1f5f9;
+  --color-base-300: #e2e8f0;
+  --color-base-content: #0f172a;
+  --color-primary: #0f766e;
+  --color-primary-content: #ffffff;
+  --color-secondary: #115e59;
+  --color-secondary-content: #ffffff;
+  --color-accent: #06b6d4;
+  --color-accent-content: #042f2e;
+  --color-neutral: #0f172a;
+  --color-neutral-content: #ffffff;
+  --color-info: #0369a1;
+  --color-info-content: #ffffff;
+  --color-success: #15803d;
+  --color-success-content: #ffffff;
+  --color-warning: #f59e0b;
+  --color-warning-content: #422006;
+  --color-error: #b91c1c;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.625rem;
+  --radius-box: 0.875rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: dark;
+
+  --color-base-100: #081614;
+  --color-base-200: #0f211f;
+  --color-base-300: #1a302d;
+  --color-base-content: #e7f3f0;
+  --color-primary: #5eead4;
+  --color-primary-content: #042f2e;
+  --color-secondary: #99f6e4;
+  --color-secondary-content: #042f2e;
+  --color-accent: #22d3ee;
+  --color-accent-content: #042f2e;
+  --color-neutral: #e2e8f0;
+  --color-neutral-content: #0f172a;
+  --color-info: #38bdf8;
+  --color-info-content: #082f49;
+  --color-success: #4ade80;
+  --color-success-content: #052e16;
+  --color-warning: #fbbf24;
+  --color-warning-content: #422006;
+  --color-error: #f87171;
+  --color-error-content: #450a0a;
+
+  --radius-selector: 0.5rem;
+  --radius-field: 0.625rem;
+  --radius-box: 0.875rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
