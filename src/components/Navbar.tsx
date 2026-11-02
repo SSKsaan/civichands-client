@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { MdPersonAdd } from "react-icons/md";
 import Container from "./Container";
 import ThemeToggle from "./ThemeToggle";
 
@@ -43,7 +44,16 @@ export default function Navbar() {
               </span>
             </span>
           </Link>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            <Link
+              href="/login"
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-content transition hover:opacity-90 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              aria-label="Sign in"
+            >
+              <MdPersonAdd className="w-5 h-5" aria-hidden="true" />
+            </Link>
+          </div>
         </nav>
       </Container>
     </header>

@@ -168,3 +168,25 @@
 [data-theme="dark"] .navbar-accent {
   opacity: 0.7;
 }
+
+/* Page enter animation */
+@keyframes page-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-page-enter {
+  animation: page-enter 250ms ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-page-enter {
+    animation: none;
+  }
+}
