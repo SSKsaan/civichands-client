@@ -3,6 +3,7 @@
 import { useState, FormEvent, Suspense, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff } from "react-icons/fi";
 import Image from "next/image";
@@ -28,6 +29,7 @@ function LoginForm() {
       const { data: session } = await authClient.getSession();
       if (session?.user && mounted) {
         redirectedRef.current = true;
+        toast.error("Already logged in");
         router.push(redirectParam ?? "/");
       }
     };
@@ -59,10 +61,12 @@ function LoginForm() {
       });
 
       if (error) {
-        throw new Error(error.message ?? "Invalid email or password.");
+        toast.error(error.message ?? "Invalid email or password.");
+        return;
       }
 
       if (data) {
+        toast.success("You are signed in.");
         const target =
           redirectParam && redirectParam.startsWith("/") && !redirectParam.startsWith("//")
             ? redirectParam
@@ -71,7 +75,7 @@ function LoginForm() {
         router.refresh();
       }
     } catch {
-      throw new Error("Could not reach the server. Try again.");
+      toast.error("Could not reach the server. Try again.");
     } finally {
       setPending(false);
     }
@@ -79,7 +83,7 @@ function LoginForm() {
 
   function handleForgotPassword(e: FormEvent) {
     e.preventDefault();
-    alert("Forgot password feature coming soon.");
+    toast("Forgot password feature coming soon.", { icon: "🔑" });
   }
 
   return (

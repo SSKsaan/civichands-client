@@ -3,6 +3,7 @@
 import { useState, FormEvent, Suspense, useEffect, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
 import { FiUser, FiMail, FiImage, FiLock, FiArrowRight, FiEye, FiEyeOff } from "react-icons/fi";
 import Image from "next/image";
@@ -28,6 +29,7 @@ function RegisterForm() {
       const { data: session } = await authClient.getSession();
       if (session?.user && mounted) {
         redirectedRef.current = true;
+        toast.error("Already logged in");
         router.push("/");
       }
     };
@@ -64,15 +66,17 @@ function RegisterForm() {
       });
 
       if (error) {
-        throw new Error(error.message ?? "Registration failed.");
+        toast.error(error.message ?? "Registration failed.");
+        return;
       }
 
       if (data) {
+        toast.success("Account created. You are now signed in.");
         router.push("/");
         router.refresh();
       }
     } catch {
-      throw new Error("Could not reach the server. Try again.");
+      toast.error("Could not reach the server. Try again.");
     } finally {
       setPending(false);
     }
