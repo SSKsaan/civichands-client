@@ -181,6 +181,26 @@
   }
 }
 
+/* Skeleton shimmer animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.5s infinite linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-shimmer {
+    animation: none;
+  }
+}
+
 .auth-page-enter {
   animation: page-enter 250ms ease-out;
 }
@@ -188,5 +208,24 @@
 @media (prefers-reduced-motion: reduce) {
   .auth-page-enter {
     animation: none;
+  }
+}
+
+/* Active nav link indicator - moving underline animation */
+@keyframes expand {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  50.01% {
+    transform-origin: right;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: right;
   }
 }
