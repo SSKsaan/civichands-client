@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
-import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff } from "react-icons/fi";
+import { FiMail, FiLock, FiArrowRight, FiEye, FiEyeOff, FiGithub } from "react-icons/fi";
+import { FcGoogle } from "react-icons/fc";
 import Image from "next/image";
 
 type FieldErrors = Partial<Record<string, string>>;
@@ -19,6 +20,7 @@ function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [pending, setPending] = useState(false);
+  const [socialPending, setSocialPending] = useState<"github" | "google" | null>(null);
   const redirectedRef = useRef(false);
 
   // Check session only once on mount
@@ -186,6 +188,59 @@ function LoginForm() {
               <Link href="/register" className="font-semibold text-primary hover:underline">Register Now!</Link>
             </p>
           </form>
+
+          <div className="mt-6">
+            <div className="relative mb-4">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-base-300" />
+              </div>
+              <div className="relative flex justify-center text-xs uppercase text-base-content/50">
+                <span className="bg-base-100 px-2 text-base-content/50">Or continue with</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <button
+                type="button"
+                disabled={pending || socialPending === "github"}
+                className="flex h-11 items-center justify-center gap-2 rounded-lg border border-base-300 bg-base-100 text-sm font-medium text-base-content transition hover:bg-base-200 hover:border-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={() => {
+                  setSocialPending("github");
+                  authClient.signIn.social({ provider: "github", callbackURL: redirectParam ? `${redirectParam}?social_login=github` : "/?social_login=github" });
+                }}
+                aria-label="Sign in with GitHub"
+              >
+                {socialPending === "github" ? (
+                  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                ) : (
+                  <FiGithub className="w-5 h-5" aria-hidden="true" />
+                )}
+                GitHub
+              </button>
+              <button
+                type="button"
+                disabled={pending || socialPending === "google"}
+                className="flex h-11 items-center justify-center gap-2 rounded-lg border border-base-300 bg-base-100 text-sm font-medium text-base-content transition hover:bg-base-200 hover:border-primary/50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={() => {
+                  setSocialPending("google");
+                  authClient.signIn.social({ provider: "google", callbackURL: redirectParam ? `${redirectParam}?social_login=google` : "/?social_login=google" });
+                }}
+                aria-label="Sign in with Google"
+              >
+                {socialPending === "google" ? (
+                  <svg className="animate-spin w-5 h-5" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                ) : (
+                  <FcGoogle className="w-5 h-5" aria-hidden="true" />
+                )}
+                Google
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </main>

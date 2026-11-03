@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Toaster from "@/components/Toaster";
+import SocialLoginToast from "@/components/SocialLoginToast";
 import ThemeProvider from "@/components/ThemeProvider";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <Navbar />
           {children}
           <Toaster />
+          <SocialLoginToast />
         </ThemeProvider>
       </body>
     </html>

@@ -6,6 +6,8 @@ export default function Toaster() {
   return (
     <HotToaster
       position="top-right"
+      gutter={8}
+      containerStyle={{ top: "72px" }}
       toastOptions={{
         duration: 4000,
         style: {

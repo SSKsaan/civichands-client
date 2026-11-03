@@ -213,16 +213,18 @@ export default function NavbarClient({ session }: NavbarClientProps) {
                           </button>
                         ))}
                       </div>
-                      <hr className="my-1 border-base-300" />
-                      <button
-                        type="button"
-                        className="flex items-center gap-3 px-3 py-2 text-sm text-error hover:bg-error/10 transition-colors focus-visible:outline-none focus-visible:bg-error/10 rounded-lg mx-1"
-                        role="menuitem"
-                        onClick={handleLogout}
-                      >
-                        <MdLogout className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
-                        Logout
-                      </button>
+                      <hr className="mt-1 border-base-300" />
+                      <div className="px-2 py-1">
+                        <button
+                          type="button"
+                          className="flex w-full items-center gap-3 px-3 py-2 text-sm text-error rounded-lg hover:bg-error/10 transition-colors focus-visible:outline-none focus-visible:bg-error/10"
+                          role="menuitem"
+                          onClick={handleLogout}
+                        >
+                          <MdLogout className="w-5 h-5 flex-shrink-0" aria-hidden="true" />
+                          Logout
+                        </button>
+                      </div>
                     </div>
                   )}
                 </div>
