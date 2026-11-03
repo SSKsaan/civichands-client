@@ -3,10 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { MdPersonAdd, MdLogout, MdAdd, MdManageAccounts, MdEventNote, MdKeyboardArrowDown } from "react-icons/md";
+import { MdPersonAdd, MdLogout, MdAdd, MdManageAccounts, MdEventNote, MdKeyboardArrowDown, MdOutlineCalendarMonth } from "react-icons/md";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "react-hot-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Container from "./Container";
 import ThemeToggle from "./ThemeToggle";
 
@@ -39,9 +39,11 @@ interface MenuItem {
 
 export default function NavbarClient({ session }: NavbarClientProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const isEventsPage = pathname === "/events";
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -129,6 +131,39 @@ export default function NavbarClient({ session }: NavbarClientProps) {
               </span>
             </span>
           </Link>
+
+          {/* Desktop: Upcoming Events link - unified icon+text with simple active color change */}
+          <div className="hidden md:flex items-center gap-1">
+            <Link
+              href="/events"
+              className={`px-3 py-2 text-sm font-medium rounded-lg flex items-center gap-1.5 transition-colors ${
+                isEventsPage
+                  ? "text-primary bg-primary/10"
+                  : "text-base-content/70 hover:text-primary hover:bg-base-200"
+              }`}
+              aria-label="Upcoming Events"
+              aria-current={isEventsPage ? "page" : undefined}
+            >
+              <MdOutlineCalendarMonth className="w-4 h-4" aria-hidden="true" />
+              <span>Upcoming Events</span>
+            </Link>
+          </div>
+
+          {/* Mobile: Upcoming Events with curved square bg - active state with primary bg */}
+          <div className="flex md:hidden items-center gap-2">
+            <Link
+              href="/events"
+              className={`flex h-9 w-9 items-center justify-center rounded-lg transition ${
+                isEventsPage
+                  ? "bg-primary text-primary-content shadow-lg"
+                  : "bg-primary/10 text-primary hover:bg-primary/20 hover:shadow-lg"
+              } focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary`}
+              aria-label="Upcoming Events"
+              aria-current={isEventsPage ? "page" : undefined}
+            >
+              <MdOutlineCalendarMonth className="w-5 h-5" aria-hidden="true" />
+            </Link>
+          </div>
 
           <div className="flex items-center gap-3">
             <ThemeToggle />
@@ -229,14 +264,17 @@ export default function NavbarClient({ session }: NavbarClientProps) {
                   )}
                 </div>
 
-                <button
-                  type="button"
-                  className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-error/10 text-error transition hover:bg-error/20 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-error"
-                  aria-label="Sign out"
-                  onClick={handleLogout}
-                >
-                  <MdLogout className="w-5 h-5" aria-hidden="true" />
-                </button>
+                {/* Desktop: Logout button with curved square bg */}
+                <div className="hidden md:flex">
+                  <button
+                    type="button"
+                    className="flex h-9 w-9 items-center justify-center rounded-lg bg-error/10 text-error transition hover:bg-error/20 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-error"
+                    aria-label="Sign out"
+                    onClick={handleLogout}
+                  >
+                    <MdLogout className="w-5 h-5" aria-hidden="true" />
+                  </button>
+                </div>
               </div>
             ) : (
               <Link
