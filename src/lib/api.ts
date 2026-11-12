@@ -13,6 +13,7 @@ export interface Event {
   creatorEmail?: string;
   creatorOrganizedCount?: number;
   creatorJoinedCount?: number;
+  isOrganizer?: boolean;
   _count?: {
     joins: number;
   };

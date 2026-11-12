@@ -459,7 +459,7 @@ export function EventDetailsContent({ event, session }: EventDetailsContentProps
   );
   const joinedCount = joinedUsers.length;
 
-  const isOrganizer = session?.user?.email === event.creatorEmail;
+  const isOrganizer = event.isOrganizer;
   const isJoined = session?.user ? joinedUsers.some((u) => u.email === session.user!.email) : false;
 
   const handleShare = async () => {
@@ -473,6 +473,7 @@ export function EventDetailsContent({ event, session }: EventDetailsContentProps
 
   const handleJoin = () => {
     if (!session) {
+      toast.error("Please sign in before joining this event.", { icon: "🔒" });
       router.push(`/login?redirect=/events/${event.id}`);
       return;
     }
